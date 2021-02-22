@@ -12,3 +12,5 @@ Additionally, the figure that will follow the current one is shown — this is a
 The game ends when the new figure can't fit in the glass. The player gets points for each row filled, so his task is to fill the rows without filling the glass itself 
 (vertically) for as long as possible, so as to get as many points as possible.
 At the end, when the game is over, an inscription about the end of the game appears on the playing field with the output of the points scored and the best record.
+
+![tetris](https://user-images.githubusercontent.com/61186198/108670055-4515e280-74ef-11eb-972f-94b657fff35a.gif)
