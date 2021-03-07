@@ -20,7 +20,7 @@ public class Intro extends JPanel implements MouseListener  {
 	 * @param tetris - screen the game
 	 * @see Intro#Intro(Tetris)
 	 */
-	public Intro(Tetris tetris){
+	public Intro(Tetris tetris) {
 		try {
 			intro = ImageIO.read(Board.class.getResource("/intro.png"));
 			background = ImageIO.read(Board.class.getResource("/background.jpg")); 
@@ -35,10 +35,11 @@ public class Intro extends JPanel implements MouseListener  {
 		this.tetris = tetris;
 	}
 	
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if(leftClick)
 			tetris.startTetris();
+
 		g.drawImage(background, 0, 0, null);
 		g.drawImage(intro, Tetris.WIDTH / 2 - intro.getWidth() / 2,
 				Tetris.HEIGHT / 2 - intro.getHeight() / 2 - 200, null);

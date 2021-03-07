@@ -17,7 +17,7 @@ public class Tetris {
 	 * Constructor - creating a new Tetris
 	 * @see Tetris#Tetris()
 	 */
-	public Tetris(){
+	public Tetris() {
 		tetris = new JFrame("Tetris");
 		tetris.setSize(WIDTH, HEIGHT);
 		tetris.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +40,7 @@ public class Tetris {
 		tetris.setVisible(true);
 	}
 
-	public void startTetris(){
+	public void startTetris() {
 		tetris.remove(intro);
 		tetris.addMouseMotionListener(board);
 		tetris.addMouseListener(board);

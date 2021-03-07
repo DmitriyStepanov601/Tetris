@@ -44,7 +44,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 	 * Constructor - creating a new game field
 	 * @see Board#Board()
 	 */
-	public Board(){
+	public Board() {
 		blocks = loadImage("/tiles.png");
 		background = loadImage("/background.jpg");
 		pause = loadImage("/pause.png");
@@ -94,7 +94,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 				blocks.getSubimage(blockSize * 6, 0, blockSize, blockSize), this, 7);
 	}
 
-	public static BufferedImage loadImage(String path){
+	public static BufferedImage loadImage(String path) {
 		try {
 			return ImageIO.read(Board.class.getResource(path));
 		} catch (IOException e) {
@@ -110,7 +110,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 			buttonLapse.stop();
 		}});
 	
-	private void update(){	
+	private void update() {
 		if(stopBounds.contains(mouseX, mouseY) && leftClick && !buttonLapse.isRunning() && !gameOver) {
 			buttonLapse.start();
 			gamePaused = !gamePaused;
@@ -122,7 +122,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 		currentShape.update();
 	}
 
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, null);
 		for(int row = 0; row < board.length; row++) {
@@ -133,6 +133,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 				}
 			}
 		}
+
 		for(int row = 0; row < nextShape.getCoords().length; row ++) {
 			for(int col = 0; col < nextShape.getCoords()[0].length; col ++) {
 				if(nextShape.getCoords()[row][col] != 0) {
@@ -140,27 +141,33 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 				}
 			}
 		}
+
 		currentShape.render(g);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setStroke(new BasicStroke(2));
 		g2d.setColor(new Color(0, 0, 0, 100));
+
 		for(int i = 0; i <= boardHeight; i++) {
 			g2d.drawLine(0, i * blockSize, boardWidth * blockSize, i * blockSize);
 		}
+
 		for(int j = 0; j <= boardWidth; j++) {
 			g2d.drawLine(j * blockSize, 0, j * blockSize, boardHeight * 30);
 		}
+
 		if(gamePaused) {
 			String gamePausedString = "GAME PAUSED";
 			g.setColor(new Color(135, 93, 170));
 			g.setFont(new Font("Arial", Font.BOLD, 30));
 			g.drawString(gamePausedString, 35, Tetris.HEIGHT / 2);
 		}
+
 		if(gameOver) {
 			String gameOverString = "GAME OVER";
 			g.setColor(new Color(12, 12, 12));
 			g.setFont(new Font("Arial", Font.BOLD, 32));
 			g.drawString(gameOverString, 50, Tetris.HEIGHT / 2);
+
 			if(bestRecord > score) {
 				g.setColor(new Color(255, 0, 0));
 				g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -173,16 +180,19 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 				g.drawString(" " + score + " ", Tetris.WIDTH - 120, Tetris.HEIGHT / 2 + 110);
 			}
 		}
+
 		if(stopBounds.contains(mouseX, mouseY))
 			g.drawImage(pause.getScaledInstance(pause.getWidth() + 3, pause.getHeight() + 3,
 					BufferedImage.SCALE_DEFAULT), stopBounds.x + 3, stopBounds.y + 3, null);
 		else
 			g.drawImage(pause, stopBounds.x, stopBounds.y, null);
+
 		if(refreshBounds.contains(mouseX, mouseY))
 			g.drawImage(refresh.getScaledInstance(refresh.getWidth() + 3, refresh.getHeight() + 3,
 					BufferedImage.SCALE_DEFAULT), refreshBounds.x + 3, refreshBounds.y + 3, null);
 		else
 			g.drawImage(refresh, refreshBounds.x, refreshBounds.y, null);
+
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.drawString("Score", Tetris.WIDTH - 130, Tetris.HEIGHT / 2);
@@ -199,12 +209,13 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 				shapes[index].getColor());
 	}
 
-	public void setCurrentShape(){
+	public void setCurrentShape() {
 		currentShape = nextShape;
 		setNextShape();
-		if(currentShape == nextShape){
+		if(currentShape == nextShape) {
 			setNextShape();
 		}
+
 		for(int row = 0; row < currentShape.getCoords().length; row ++) {
 			for(int col = 0; col < currentShape.getCoords()[0].length; col ++) {
 				if(currentShape.getCoords()[row][col] != 0) {
@@ -226,6 +237,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 		if(e.getKeyCode() == KeyEvent.VK_DOWN)
 			currentShape.speedUp();
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_DOWN)
@@ -235,7 +247,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 	@Override
 	public void keyTyped(KeyEvent e) { }
 	
-	public void startGame(){
+	public void startGame() {
 		stopGame();
 		setNextShape();
 		setCurrentShape();
@@ -243,7 +255,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 		looper.start();
 	}
 
-	public void stopGame(){
+	public void stopGame() {
 		score = 0;
 		for (int[] ints : board) {
 			Arrays.fill(ints, 0);
