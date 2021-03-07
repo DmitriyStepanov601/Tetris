@@ -30,14 +30,16 @@ public class Shape {
 	 * @param color - color shape
 	 * @see Shape#Shape(int[][],BufferedImage,Board,int)
 	 */
-	public Shape(int[][] coords, BufferedImage block, Board board, int color){
+	public Shape(int[][] coords, BufferedImage block, Board board, int color) {
 		this.coords = coords;
 		this.block = block;
 		this.board = board;
 		this.color = color;
+
 		deltaX = 0;
 		x = 4;
 		y = 0;
+
 		delay = normal;
 		time = 0;
 		lastTime = System.currentTimeMillis();
@@ -45,7 +47,7 @@ public class Shape {
 		System.arraycopy(coords, 0, reference, 0, coords.length);
 	}
 	
-	public void update(){
+	public void update() {
 		moveX = true;
 		deltaTime = System.currentTimeMillis() - lastTime;
 		time += deltaTime;
@@ -57,11 +59,13 @@ public class Shape {
 						board.getBoard()[y + row][x + col] = color;
 				}
 			}
+
 			checkLine();
 			board.addScore();
 			board.setCurrentShape();
 			timePassedFromCollision = -1;
 		}
+
 		if(!(x + deltaX + coords[0].length > 10) && !(x + deltaX < 0)) {
 			for(int row = 0; row < coords.length; row++) {
 				for(int col = 0; col < coords[row].length; col ++) {
@@ -76,6 +80,7 @@ public class Shape {
 			if(moveX)
 				x += deltaX;
 		}
+
 		if (timePassedFromCollision == -1) {
 			if(!(y + 1 + coords.length > 20)) {
 				for(int row = 0; row < coords.length; row++) {
@@ -87,6 +92,7 @@ public class Shape {
 						}
 					}
 				}
+
 				if(time > delay) {
 					y++;
 					time = 0;
@@ -105,7 +111,7 @@ public class Shape {
         timePassedFromCollision = 0;
     }
 	
-	public void render(Graphics g){
+	public void render(Graphics g) {
 		for(int row = 0; row < coords.length; row ++) {
 			for(int col = 0; col < coords[0].length; col ++) {
 				if(coords[row][col] != 0) {
@@ -113,6 +119,7 @@ public class Shape {
 				}
 			}		
 		}
+
 		for(int row = 0; row < reference.length; row ++) {
 			for(int col = 0; col < reference[0].length; col ++) {
 				if(reference[row][col] != 0) {
@@ -122,7 +129,7 @@ public class Shape {
 		}
 	}
 	
-	private void checkLine(){
+	private void checkLine() {
 		int size = board.getBoard().length - 1;
 		for(int i = board.getBoard().length - 1; i > 0; i--) {
 			int count = 0;
@@ -132,6 +139,7 @@ public class Shape {
 				}
 				board.getBoard()[size][j] = board.getBoard()[i][j];
 			}
+
 			if(count < board.getBoard()[0].length) {
 				size --;
 			}
@@ -145,6 +153,7 @@ public class Shape {
 		if((x + rotatedShape[0].length > 10) || (y + rotatedShape.length > 20)) {
 			return;
 		}
+
 		for(int row = 0; row < rotatedShape.length; row++) {
 			for(int col = 0; col < rotatedShape[row].length; col ++) {
 				if(rotatedShape[row][col] != 0) {
@@ -157,17 +166,17 @@ public class Shape {
 		coords = rotatedShape;
 	}
 
-    private int[][] transposeMatrix(int[][] matrix){
+    private int[][] transposeMatrix(int[][] matrix) {
         int[][] temp = new int[matrix[0].length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++){
+            for (int j = 0; j < matrix[0].length; j++) {
                 temp[j][i] = matrix[i][j];
             }
         }
         return temp;
     }
 
-	private int[][] reverseRows(int[][] matrix){
+	private int[][] reverseRows(int[][] matrix) {
 		int middle = matrix.length/2;
 		for(int i = 0; i < middle; i++) {
 			int[] temp = matrix[i];
